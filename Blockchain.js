@@ -42,6 +42,8 @@ blockchain.addBlock({data:"block2"});
 console.log(blockchain)
 // console.log(Blockchain.isValidatChain(blockchain.chain))
 
+module.exports = Blockchain
+
 
 
 

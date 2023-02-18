@@ -1,3 +1,4 @@
+const MIN_RATE = 1000;
 const DIFFICult_LEVEL =2;
 const Genesis_block = {
     timestamp : 1,
@@ -8,4 +9,4 @@ const Genesis_block = {
     difficulty : DIFFICult_LEVEL
 }
 
-module.exports = {Genesis_block};
+module.exports = {Genesis_block,MIN_RATE};
