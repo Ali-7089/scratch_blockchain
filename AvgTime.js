@@ -1,23 +1,23 @@
-const Block = require("./Block");
 const Blockchain = require("./Blockchain");
 
 const blockchain = new Blockchain();
-let prevTimestamp , nextTimestamp , nextBlock , diff , avgtime;
-let times = [];
-blockchain.addBlock({data:"hello"})
+let prevTimestamp, nextTimestamp , nextBlock , diff , avgtime;
+blockchain.addBlock({data:'hey buddy'})
 
-for(var i=1;i<=10;i++){
-    prevTimestamp = blockchain.chain[blockchain.chain.length-1].timestamp
-    blockchain.addBlock({data :`Block ${i}`});
-    
-    nextBlock = blockchain.chain[blockchain.chain.length-1];
-    nextTimestamp = nextBlock.timestamp;
+let time = [];
+for(var i=1;i<=1000;i++){
+ prevTimestamp = blockchain.chain[blockchain.chain.length-1].timestamp;
+ blockchain.addBlock({data:`block${i}`});
+ nextBlock = blockchain.chain[blockchain.chain.length-1]
 
-    diff = nextTimestamp - prevTimestamp;
-    times.push(diff);
+ nextTimestamp = nextBlock.timestamp;
 
-    avgtime = times.reduce((total, num)=> total+num)/ times.length
-    console.log(
-        `Time to mine block ${diff} ,difficulty ${nextBlock.difficulty} , agvTime ${avgtime} `
-        )
+ diff = nextTimestamp - prevTimestamp
+ time.push(diff)
+
+ avgtime = time.reduce((total, num)=> total + num)/time.length
+ 
+ console.log(
+    `Time to min block ${diff} , difficulty ${nextBlock.difficulty} ,average time ${avgtime}`
+    )
 }

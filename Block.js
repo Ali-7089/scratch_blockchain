@@ -1,5 +1,6 @@
 const cryptoHash = require('./crypto_hash');
 const {Genesis_block, MIN_RATE} = require('./Gensis')
+const hexToBinary = require('hex-to-binary');
 
 class Block{
    constructor({timestamp,prevHash,hash,data, nonce , difficulty}){
@@ -14,16 +15,16 @@ class Block{
     return new Block(Genesis_block)
    }
   static mineBlock({prevBlock,data}){
-    let {difficulty} = Block.genesis()
+    let {difficulty} = prevBlock
     let timestamp , hash;
-    const prevHash = prevBlock.hash;
+    let prevHash = prevBlock.hash;
     let nonce  =0;
     do{
      nonce++;
      timestamp = Date.now()
      difficulty = Block.adjustDifficulty({originalBlock:prevBlock , timestamp})
     hash = cryptoHash(timestamp , prevHash ,data , nonce, difficulty)
-    }while(hash.substring(0,difficulty).toString() !== "0".repeat(difficulty).toString());
+    }while(hexToBinary( hash).substring(0,difficulty).toString() !== "0".repeat(difficulty).toString());
     return new Block({
         timestamp,
         prevHash,
@@ -41,6 +42,7 @@ class Block{
       if(diff>MIN_RATE) return difficulty - 1;
       return difficulty + 1;
    }
+  //  https://github.com/microsoftarchive/redis/releases
 }
 const block1 = new Block({
 prevHash:'0x123',
