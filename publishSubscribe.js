@@ -11,19 +11,24 @@ class PubSub{
         this.subscriber = redis.createClient();
 
         this.subscriber.subscribe(CHANNEL.TEST);
+        this.subscriber.subscribe(CHANNEL.BLOCKCHAIN);
         this.subscriber.on('message' , (channel , message)=>{
-          console.log(message)
+            console.log(`message ${message} publish at ${channel} `)
+           const newChain = JSON.parse(message);
+           if(channel===CHANNEL.BLOCKCHAIN){
+            this.blockchain.replaceChain(newChain);
+           }
         })
     }
 
-    publis(channel , message){
+    publis({channel , message}){
         this.publisher.publish(channel, message)
     }
 
     broadCast(){
         this.publis({
             channel : CHANNEL.BLOCKCHAIN,
-            message : this.blockchain.chain
+            message :JSON.stringify(this.blockchain.chain)
         })
     }
 
